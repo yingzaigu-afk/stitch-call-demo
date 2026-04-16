@@ -525,7 +525,7 @@
             <span class="material-symbols-outlined text-[10px] text-primary" style="font-variation-settings:'FILL'1">check</span>
           </div>
         </div>
-        <button class="bg-gradient-to-r from-primary to-primary-container text-on-primary px-3.5 py-1.5 rounded-lg text-xs font-bold active:scale-95 transition-all cursor-pointer">去领奖</button>
+        <button onclick="goToClaim('CH-8829-XJ', '定制运动卫衣', 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=300&q=80')" class="bg-gradient-to-r from-primary to-primary-container text-on-primary px-3.5 py-1.5 rounded-lg text-xs font-bold active:scale-95 transition-all cursor-pointer">去领奖</button>
       </div>
     </div>
 
@@ -587,6 +587,176 @@
     </p>
   </div>
 </footer>
+</div>
+
+
+<!-- ======================== PAGE: CLAIM PRIZE ======================== -->
+<div id="page-claim" class="page">
+<nav class="fixed top-0 w-full z-50 bg-[#f8faf9]/80 backdrop-blur-md">
+  <div class="flex items-center justify-between px-5 h-16 max-w-screen-xl mx-auto">
+    <button onclick="showPage('codes')" class="flex items-center gap-2 cursor-pointer">
+      <span class="material-symbols-outlined text-[#008566]">arrow_back</span>
+      <span class="font-headline font-black tracking-tighter text-[#008566] text-sm">CITY CHEER</span>
+    </button>
+    <div class="font-headline font-bold tracking-tight text-[#008566] text-sm">领取周边</div>
+  </div>
+</nav>
+
+<main class="pt-16 pb-12 px-5 max-w-md mx-auto space-y-4">
+  <!-- Prize Info Card -->
+  <section class="mt-4">
+    <div class="bg-primary-fixed/20 border border-primary-fixed/40 rounded-xl p-4 flex gap-3">
+      <div class="w-16 h-16 rounded-lg bg-surface overflow-hidden flex-shrink-0">
+        <img id="claim-prize-img" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=300&q=80" alt="奖品"/>
+      </div>
+      <div class="flex-1 min-w-0">
+        <p class="font-bold text-sm text-on-surface" id="claim-prize-name">定制运动卫衣</p>
+        <p class="text-[10px] text-on-surface-variant mt-0.5">预约码: <span class="text-primary font-semibold" id="claim-prize-code">CH-8829-XJ</span></p>
+        <div class="mt-1.5 inline-flex items-center gap-1 bg-primary/10 px-2 py-0.5 rounded-full">
+          <span class="material-symbols-outlined text-primary text-xs" style="font-variation-settings:'FILL'1">verified_user</span>
+          <span class="text-[9px] text-primary font-bold">已核销可领取</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Address Form -->
+  <section class="bg-surface-container-lowest rounded-xl p-4 soft-elevation">
+    <div class="flex items-center gap-2 mb-4">
+      <div class="w-1 h-5 bg-primary rounded-full"></div>
+      <h2 class="text-sm font-bold text-primary">收货信息</h2>
+    </div>
+    
+    <form id="claim-form" class="space-y-4" onsubmit="handleClaimSubmit(event)">
+      <!-- Recipient Name -->
+      <div class="space-y-1.5">
+        <label class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">收货人姓名</label>
+        <input 
+          type="text" 
+          id="claim-name" 
+          placeholder="请输入收货人姓名"
+          class="w-full px-3 py-2.5 bg-surface border border-outline/30 rounded-lg text-sm text-on-surface placeholder:text-outline focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/30 transition-all"
+          required
+          maxlength="20"
+        />
+      </div>
+
+      <!-- Phone -->
+      <div class="space-y-1.5">
+        <label class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">手机号码</label>
+        <input 
+          type="tel" 
+          id="claim-phone" 
+          placeholder="请输入手机号码"
+          class="w-full px-3 py-2.5 bg-surface border border-outline/30 rounded-lg text-sm text-on-surface placeholder:text-outline focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/30 transition-all"
+          required
+          pattern="1[3-9]\d{9}"
+          maxlength="11"
+        />
+      </div>
+
+      <!-- Province/City/District -->
+      <div class="space-y-1.5">
+        <label class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">所在地区</label>
+        <div class="grid grid-cols-3 gap-2">
+          <select 
+            id="claim-province" 
+            class="px-2 py-2.5 bg-surface border border-outline/30 rounded-lg text-xs text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/30 transition-all cursor-pointer"
+            required
+            onchange="updateClaimCities()"
+          >
+            <option value="">省</option>
+            <option value="江苏" selected>江苏省</option>
+            <option value="浙江">浙江省</option>
+            <option value="安徽">安徽省</option>
+            <option value="上海">上海市</option>
+          </select>
+          <select 
+            id="claim-city" 
+            class="px-2 py-2.5 bg-surface border border-outline/30 rounded-lg text-xs text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/30 transition-all cursor-pointer"
+            required
+            onchange="updateClaimDistricts()"
+          >
+            <option value="">市</option>
+            <option value="南京">南京市</option>
+            <option value="苏州">苏州市</option>
+            <option value="无锡">无锡市</option>
+            <option value="常州">常州市</option>
+            <option value="徐州">徐州市</option>
+            <option value="南通">南通市</option>
+            <option value="连云港">连云港市</option>
+            <option value="淮安">淮安市</option>
+            <option value="盐城">盐城市</option>
+            <option value="扬州">扬州市</option>
+            <option value="镇江">镇江市</option>
+            <option value="泰州">泰州市</option>
+            <option value="宿迁">宿迁市</option>
+          </select>
+          <select 
+            id="claim-district" 
+            class="px-2 py-2.5 bg-surface border border-outline/30 rounded-lg text-xs text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/30 transition-all cursor-pointer"
+            required
+          >
+            <option value="">区</option>
+            <option value="玄武区">玄武区</option>
+            <option value="秦淮区">秦淮区</option>
+            <option value="鼓楼区">鼓楼区</option>
+            <option value="建邺区">建邺区</option>
+            <option value="栖霞区">栖霞区</option>
+            <option value="雨花台区">雨花台区</option>
+            <option value="江宁区">江宁区</option>
+            <option value="浦口区">浦口区</option>
+            <option value="六合区">六合区</option>
+            <option value="溧水区">溧水区</option>
+            <option value="高淳区">高淳区</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Detailed Address -->
+      <div class="space-y-1.5">
+        <label class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">详细地址</label>
+        <textarea 
+          id="claim-address" 
+          placeholder="请输入街道、门牌号等信息"
+          class="w-full px-3 py-2.5 bg-surface border border-outline/30 rounded-lg text-sm text-on-surface placeholder:text-outline focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/30 transition-all resize-none"
+          required
+          rows="3"
+          maxlength="100"
+        ></textarea>
+        <p class="text-[9px] text-outline text-right"><span id="claim-addr-count">0</span>/100</p>
+      </div>
+    </form>
+  </section>
+
+  <!-- Notice -->
+  <section class="bg-secondary-fixed/20 border border-secondary-fixed/40 rounded-xl p-3">
+    <div class="flex items-start gap-2">
+      <span class="material-symbols-outlined text-secondary text-sm mt-0.5" style="font-variation-settings:'FILL'1">info</span>
+      <div class="space-y-1">
+        <p class="text-[10px] font-bold text-on-secondary-fixed">领取须知</p>
+        <ul class="text-[9px] text-on-surface-variant space-y-0.5 leading-relaxed">
+          <li>• 周边产品将于活动结束后15个工作日内寄出</li>
+          <li>• 请确保收货信息准确，配送以提交地址为准</li>
+          <li>• 新疆、西藏等偏远地区可能影响配送时效</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Submit Button -->
+  <button 
+    type="submit" 
+    form="claim-form"
+    class="w-full h-12 bg-gradient-to-r from-primary to-primary-container rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-primary/20 active:scale-95 transition-all cursor-pointer mt-2"
+  >
+    <span class="text-on-primary font-headline text-sm font-bold">确认提交</span>
+  </button>
+
+  <p class="text-center text-[9px] text-outline leading-relaxed">
+    提交后可在"我的码册"查看领取进度
+  </p>
+</main>
 </div>
 
 
@@ -747,6 +917,67 @@
 
 <!-- ======================== JAVASCRIPT ======================== -->
 <script>
+  // Claim page data
+  let claimData = {
+    code: '',
+    prizeName: '',
+    prizeImg: ''
+  };
+
+  function goToClaim(code, prizeName, prizeImg) {
+    claimData.code = code;
+    claimData.prizeName = prizeName;
+    claimData.prizeImg = prizeImg;
+    document.getElementById('claim-prize-code').textContent = code;
+    document.getElementById('claim-prize-name').textContent = prizeName;
+    document.getElementById('claim-prize-img').src = prizeImg;
+    showPage('claim');
+  }
+
+  function handleClaimSubmit(e) {
+    e.preventDefault();
+    const name = document.getElementById('claim-name').value.trim();
+    const phone = document.getElementById('claim-phone').value.trim();
+    const district = document.getElementById('claim-district').value;
+    const address = document.getElementById('claim-address').value.trim();
+    
+    if (!name || !phone || !district || !address) {
+      showToast('请填写完整信息', '信息不完整');
+      return;
+    }
+    
+    if (!/^1[3-9]\d{9}$/.test(phone)) {
+      showToast('请输入正确的手机号码', '手机号格式错误');
+      return;
+    }
+    
+    // Simulate success
+    showToast('提交成功！', '周边将尽快寄出', `预约码 ${claimData.code} 的收货信息已确认`);
+    setTimeout(() => {
+      closeToast();
+      showPage('codes');
+    }, 2500);
+  }
+
+  function updateClaimDistricts() {
+    // Simplified - in production would cascade from city selection
+  }
+
+  function updateClaimCities() {
+    // Simplified - in production would cascade from province selection
+  }
+
+  // Address character counter
+  document.addEventListener('DOMContentLoaded', () => {
+    const addrInput = document.getElementById('claim-address');
+    if (addrInput) {
+      addrInput.addEventListener('input', () => {
+        const counter = document.getElementById('claim-addr-count');
+        if (counter) counter.textContent = addrInput.value.length;
+      });
+    }
+  });
+
   // City data
   const cityData = {
     nanjing: {
@@ -885,6 +1116,13 @@
 
   function closeToast() {
     document.getElementById('success-toast').classList.add('hidden');
+  }
+
+  function showToast(title, subtitle, code) {
+    document.getElementById('toast-title').textContent = title;
+    document.getElementById('toast-subtitle').textContent = subtitle;
+    document.getElementById('toast-code').textContent = code || '';
+    document.getElementById('success-toast').classList.remove('hidden');
   }
 
   function spawnConfetti() {
