@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html class="light" lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>CITY CHEER - 助力苏超 预约赢精彩周边</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "inverse-surface": "#2e3131",
+          "surface-container-highest": "#e1e3e2",
+          "secondary-fixed-dim": "#e3c466",
+          "on-background": "#191c1c",
+          "inverse-on-surface": "#eff1f0",
+          "surface-container": "#eceeed",
+          "background": "#f8faf9",
+          "tertiary-fixed-dim": "#87d6ba",
+          "on-secondary-fixed": "#231b00",
+          "on-secondary-fixed-variant": "#574500",
+          "on-tertiary-container": "#f7fff9",
+          "primary-fixed-dim": "#72d9b5",
+          "on-error-container": "#93000a",
+          "outline": "#6e7a74",
+          "tertiary-fixed": "#a3f2d6",
+          "on-primary": "#ffffff",
+          "surface-variant": "#e1e3e2",
+          "surface-tint": "#006c52",
+          "on-surface-variant": "#3e4944",
+          "on-error": "#ffffff",
+          "secondary": "#735c00",
+          "surface-container-lowest": "#ffffff",
+          "inverse-primary": "#72d9b5",
+          "on-secondary": "#ffffff",
+          "on-tertiary-fixed": "#002117",
+          "primary-container": "#008566",
+          "primary-fixed": "#8ff6d0",
+          "surface-bright": "#f8faf9",
+          "surface-container-low": "#f2f4f3",
+          "error-container": "#ffdad6",
+          "surface-dim": "#d8dad9",
+          "surface": "#f8faf9",
+          "on-secondary-container": "#786005",
+          "on-tertiary-fixed-variant": "#00513e",
+          "tertiary-container": "#32826a",
+          "primary": "#006950",
+          "on-surface": "#191c1c",
+          "tertiary": "#0d6952",
+          "on-primary-fixed-variant": "#00513d",
+          "error": "#ba1a1a",
+          "on-primary-container": "#f8fff9",
+          "secondary-fixed": "#ffe085",
+          "on-primary-fixed": "#002117",
+          "secondary-container": "#fedd7c",
+          "outline-variant": "#bdc9c2",
+          "on-tertiary": "#ffffff",
+          "surface-container-high": "#e6e9e8"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "fontFamily": {
+          "headline": ["Manrope"],
+          "body": ["Inter"],
+          "label": ["Inter"]
+        }
+      },
+    },
+  }
+</script>
+<style>
+  * { -webkit-tap-highlight-color: transparent; }
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    vertical-align: middle;
+  }
+  .editorial-gradient {
+    background: linear-gradient(135deg, #006950 0%, #008566 100%);
+  }
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+  }
+  .soft-elevation {
+    box-shadow: 0 4px 32px rgba(25, 28, 28, 0.06);
+  }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  body { min-height: 100dvh; }
+  .page { display: none; }
+  .page.active { display: block; }
+  .tab-active {
+    background: #ffffff;
+    color: #006950;
+    box-shadow: 0 2px 8px rgba(25,28,28,0.08);
+  }
+  @keyframes pulse-ring {
+    0% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(1.5); opacity: 0; }
+  }
+  .call-pulse::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 9999px;
+    border: 2px solid #006950;
+    animation: pulse-ring 1.5s ease-out infinite;
+  }
+  @keyframes pop-in {
+    0% { opacity: 0; transform: scale(0.8) translateY(20px); }
+    70% { transform: scale(1.05) translateY(-5px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .pop-in { animation: pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+  @keyframes confetti-fall {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100px) rotate(720deg); opacity: 0; }
+  }
+  .confetti-piece {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    pointer-events: none;
+    z-index: 9999;
+    animation: confetti-fall 1.5s ease-in forwards;
+  }
+  @keyframes fade-in-up {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-in-up { animation: fade-in-up 0.4s ease-out forwards; }
+  .progress-fill { transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
+  @keyframes count-bump {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+  }
+  .count-bump { animation: count-bump 0.4s ease-out; }
+  @keyframes success-check {
+    0% { transform: scale(0) rotate(-45deg); opacity: 0; }
+    60% { transform: scale(1.2) rotate(10deg); opacity: 1; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+  .success-check { animation: success-check 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+</style>
+</head>
+<body class="bg-surface font-body text-on-surface antialiased overflow-x-hidden">
+
+<!-- ======================== PAGE: HOME ======================== -->
+<div id="page-home" class="page active">
+<nav class="fixed top-0 w-full z-50 bg-[#f8faf9]/80 backdrop-blur-md">
+  <div class="flex items-center justify-between px-5 h-16 max-w-screen-xl mx-auto">
+    <div class="flex items-center gap-2">
+      <span class="material-symbols-outlined text-[#008566]">arrow_back</span>
+      <span class="font-headline font-black tracking-tighter text-[#008566] text-sm">CITY CHEER</span>
+    </div>
+    <div class="font-headline font-bold tracking-tight text-[#008566] text-xs text-center max-w-[160px]">助力苏超<br/>预约赢精彩周边</div>
+  </div>
+</nav>
+
+<main class="pt-16 pb-10">
+  <!-- Hero -->
+  <section class="relative overflow-hidden pt-6 px-5 pb-16">
+    <div class="absolute inset-0 z-0">
+      <img class="w-full h-full object-cover opacity-10" src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&q=80" alt="stadium"/>
+    </div>
+    <div class="relative z-10 space-y-4">
+      <div class="editorial-gradient rounded-xl p-6 text-on-primary soft-elevation relative overflow-hidden">
+        <div class="absolute top-0 right-0 opacity-10 translate-x-1/4 -translate-y-1/4">
+          <span class="material-symbols-outlined text-[80px]" style="font-variation-settings:'FILL'1">sports_soccer</span>
+        </div>
+        <p class="font-headline font-extrabold text-2xl tracking-tight leading-tight mb-0.5">助力苏超</p>
+        <p class="font-headline font-bold text-base opacity-90">预约赢精彩周边</p>
+        <div class="mt-5 inline-flex items-center gap-1.5 bg-secondary-fixed text-on-secondary-fixed px-3 py-1 rounded-full font-bold text-xs">
+          <span class="material-symbols-outlined text-xs">stars</span>
+          江苏城市荣耀赛
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-2.5">
+        <button onclick="showPage('codes')" class="bg-surface-container-lowest p-3.5 rounded-xl flex items-center justify-center gap-2 soft-elevation active:scale-95 transition-all cursor-pointer">
+          <span class="material-symbols-outlined text-primary text-lg">confirmation_number</span>
+          <span class="font-semibold text-xs text-on-surface">我的抽奖码</span>
+        </button>
+        <button onclick="showPage('rules')" class="bg-surface-container-lowest p-3.5 rounded-xl flex items-center justify-center gap-2 soft-elevation active:scale-95 transition-all cursor-pointer">
+          <span class="material-symbols-outlined text-primary text-lg">description</span>
+          <span class="font-semibold text-xs text-on-surface">活动规则</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- City Selection -->
+  <section class="px-5 space-y-4">
+    <div class="flex items-end justify-between">
+      <div>
+        <h2 class="font-headline font-extrabold text-lg text-primary">为城市应援</h2>
+        <p class="text-outline text-xs mt-0.5">选择您的主场城市，积攒城力值</p>
+      </div>
+      <span class="material-symbols-outlined text-secondary-fixed-dim text-xl">location_on</span>
+    </div>
+
+    <!-- Featured: Nanjing -->
+    <div onclick="showPage('call','nanjing')" class="bg-primary-fixed rounded-xl p-4 relative overflow-hidden cursor-pointer active:scale-[0.98] transition-transform">
+      <div class="flex justify-between items-center">
+        <div>
+          <h3 class="font-headline font-black text-xl text-on-primary-fixed">南京</h3>
+          <p class="text-on-primary-fixed-variant font-medium text-xs mt-0.5">江苏首府 · 活力之都</p>
+        </div>
+        <span class="material-symbols-outlined text-2xl text-on-primary-fixed" style="font-variation-settings:'FILL'1">account_balance</span>
+      </div>
+      <div class="mt-3 flex items-center gap-2">
+        <div class="bg-on-primary-fixed text-primary px-2 py-0.5 rounded-full text-[10px] font-bold">主力城市</div>
+        <div class="text-on-primary-fixed-variant text-[10px] font-semibold">1,240,582 票已投</div>
+      </div>
+    </div>
+
+    <!-- City Grid -->
+    <div class="grid grid-cols-4 gap-2">
+      <div onclick="showPage('call','suzhou')" class="col-span-2 bg-surface-container-low p-3 rounded-xl flex flex-col items-center gap-0.5 cursor-pointer active:scale-95 transition-transform">
+        <span class="font-headline font-bold text-xs">苏州</span>
+        <span class="text-[8px] text-outline font-bold tracking-widest">SUZHOU</span>
+      </div>
+      <div onclick="showPage('call','wuxi')" class="col-span-2 bg-surface-container-low p-3 rounded-xl flex flex-col items-center gap-0.5 cursor-pointer active:scale-95 transition-transform">
+        <span class="font-headline font-bold text-xs">无锡</span>
+        <span class="text-[8px] text-outline font-bold tracking-widest">WUXI</span>
+      </div>
+      <div onclick="showPage('call','xuzhou')" class="col-span-2 bg-surface-container-low p-3 rounded-xl flex flex-col items-center gap-0.5 cursor-pointer active:scale-95 transition-transform">
+        <span class="font-headline font-bold text-xs">徐州</span>
+        <span class="text-[8px] text-outline font-bold tracking-widest">XUZHOU</span>
+      </div>
+      <div onclick="showPage('call','changzhou')" class="col-span-2 bg-surface-container-low p-3 rounded-xl flex flex-col items-center gap-0.5 cursor-pointer active:scale-95 transition-transform">
+        <span class="font-headline font-bold text-xs">常州</span>
+        <span class="text-[8px] text-outline font-bold tracking-widest">CHANGZHOU</span>
+      </div>
+      <div onclick="showPage('call','nantong')" class="col-span-1 bg-surface-container-low py-2.5 rounded-xl flex items-center justify-center cursor-pointer active:scale-95 transition-transform">
+        <span class="font-headline font-bold text-[10px]">南通</span>
+      </div>
+      <div onclick="showPage('call','lyg')" class="col-span-1 bg-surface-container-low py-2.5 rounded-xl flex items-center justify-center cursor-pointer active:scale-95 transition-transform">
+        <span class="font-headline font-bold text-[10px]">连云港</span>
+      </div>
+      <div onclick="showPage('call','huaian')" class="col-span-1 bg-surface-container-low py-2.5 rounded-xl flex items-center justify-center cursor-pointer active:scale-95 transition-transform">
+        <span class="font-headline font-bold text-[10px]">淮安</span>
+      </div>
+      <div onclick="showPage('call','yancheng')" class="col-span-1 bg-surface-container-low py-2.5 rounded-xl flex items-center justify-center cursor-pointer active:scale-95 transition-transform">
+        <span class="font-headline font-bold text-[10px]">盐城</span>
+      </div>
+      <div onclick="showPage('call','yangzhou')" class="col-span-1 bg-surface-container-low py-2.5 rounded-xl flex items-center justify-center cursor-pointer active:scale-95 transition-transform">
+        <span class="font-headline font-bold text-[10px]">扬州</span>
+      </div>
+      <div onclick="showPage('call','zhenjiang')" class="col-span-1 bg-surface-container-low py-2.5 rounded-xl flex items-center justify-center cursor-pointer active:scale-95 transition-transform">
+        <span class="font-headline font-bold text-[10px]">镇江</span>
+      </div>
+      <div onclick="showPage('call','taizhou')" class="col-span-1 bg-surface-container-low py-2.5 rounded-xl flex items-center justify-center cursor-pointer active:scale-95 transition-transform">
+        <span class="font-headline font-bold text-[10px]">泰州</span>
+      </div>
+      <div onclick="showPage('call','suqian')" class="col-span-1 bg-surface-container-low py-2.5 rounded-xl flex items-center justify-center cursor-pointer active:scale-95 transition-transform">
+        <span class="font-headline font-bold text-[10px]">宿迁</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Leaderboard -->
+  <section class="mt-8 px-5">
+    <div class="bg-surface-container-lowest rounded-2xl p-4 soft-elevation">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="font-headline font-extrabold text-base">实时城力榜</h2>
+        <div class="bg-surface-container-high px-2 py-0.5 rounded-full text-[9px] font-bold text-primary flex items-center gap-1">
+          <span class="w-1 h-1 bg-primary rounded-full animate-pulse"></span>实时更新
+        </div>
+      </div>
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <div class="w-6 h-6 rounded-full bg-secondary-container flex items-center justify-center font-black text-on-secondary-container italic text-xs">1</div>
+            <span class="font-bold text-sm">南京市</span>
+          </div>
+          <div class="text-right">
+            <div class="font-headline font-bold text-primary text-xs">1,240,582</div>
+            <div class="text-[8px] text-outline font-bold uppercase">Points</div>
+          </div>
+        </div>
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <div class="w-6 h-6 rounded-full bg-surface-container-highest flex items-center justify-center font-black text-on-surface-variant italic text-xs">2</div>
+            <span class="font-bold text-sm">苏州市</span>
+          </div>
+          <div class="text-right">
+            <div class="font-headline font-bold text-on-surface text-xs">1,098,231</div>
+            <div class="text-[8px] text-outline font-bold uppercase">Points</div>
+          </div>
+        </div>
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <div class="w-6 h-6 rounded-full bg-surface-container-highest flex items-center justify-center font-black text-on-surface-variant italic text-xs">3</div>
+            <span class="font-bold text-sm">无锡市</span>
+          </div>
+          <div class="text-right">
+            <div class="font-headline font-bold text-on-surface text-xs">945,110</div>
+            <div class="text-[8px] text-outline font-bold uppercase">Points</div>
+          </div>
+        </div>
+      </div>
+      <button onclick="showPage('call','nanjing')" class="w-full mt-4 py-3 bg-primary text-on-primary rounded-xl font-bold text-sm active:scale-95 transition-all cursor-pointer">
+        为我的城市加油
+      </button>
+    </div>
+  </section>
+
+  <!-- Prizes -->
+  <section class="mt-8 px-5">
+    <h2 class="font-headline font-extrabold text-base mb-3">预约赢好礼</h2>
+    <div class="flex gap-2.5 overflow-x-auto pb-4 -mx-5 px-5 no-scrollbar">
+      <div class="min-w-[130px] bg-surface-container-lowest rounded-xl p-3 soft-elevation flex-shrink-0">
+        <div class="aspect-square rounded-lg bg-surface-container mb-2.5 overflow-hidden">
+          <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=300&q=80" alt="卫衣"/>
+        </div>
+        <p class="font-bold text-[11px] text-on-surface">定制运动卫衣</p>
+        <p class="text-primary font-bold text-[10px] mt-1">预约抽取</p>
+      </div>
+      <div class="min-w-[130px] bg-surface-container-lowest rounded-xl p-3 soft-elevation flex-shrink-0">
+        <div class="aspect-square rounded-lg bg-surface-container mb-2.5 overflow-hidden">
+          <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=300&q=80" alt="足球"/>
+        </div>
+        <p class="font-bold text-[11px] text-on-surface">苏超联名足球</p>
+        <p class="text-primary font-bold text-[10px] mt-1">预约抽取</p>
+      </div>
+      <div class="min-w-[130px] bg-surface-container-lowest rounded-xl p-3 soft-elevation flex-shrink-0">
+        <div class="aspect-square rounded-lg bg-surface-container mb-2.5 overflow-hidden">
+          <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=300&q=80" alt="保温杯"/>
+        </div>
+        <p class="font-bold text-[11px] text-on-surface">限量版保温杯</p>
+        <p class="text-primary font-bold text-[10px] mt-1">预约抽取</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="h-16"></div>
+</main>
+</div>
+
+
+<!-- ======================== PAGE: CITY CALL ======================== -->
+<div id="page-call" class="page">
+<nav class="fixed top-0 w-full z-50 bg-[#f8faf9]/80 backdrop-blur-md">
+  <div class="flex items-center justify-between px-5 h-16 max-w-screen-xl mx-auto">
+    <button onclick="showPage('home')" class="flex items-center gap-2 cursor-pointer">
+      <span class="material-symbols-outlined text-[#008566]">arrow_back</span>
+      <span class="font-headline font-black tracking-tighter text-[#008566] text-sm">CITY CHEER</span>
+    </button>
+    <div class="font-headline font-bold tracking-tight text-[#008566] text-xs" id="call-city-nav-title">南京</div>
+    <span class="material-symbols-outlined text-[#191c1c] text-xl">share</span>
+  </div>
+</nav>
+
+<main class="pt-16 pb-24">
+  <!-- Hero -->
+  <section class="relative w-full h-[260px] flex items-end overflow-hidden">
+    <img id="call-hero" class="absolute inset-0 w-full h-full object-cover" src="https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=800&q=80" alt="city"/>
+    <div class="absolute inset-0 bg-gradient-to-t from-background via-black/10 to-transparent"></div>
+    <div class="relative z-10 p-5 w-full">
+      <div id="call-badge" class="inline-flex items-center px-3 py-1 bg-primary text-on-primary rounded-full text-[10px] font-bold mb-2 tracking-widest uppercase">
+        Nanjing | 南京
+      </div>
+      <h2 class="font-headline text-2xl font-extrabold tracking-tighter text-white mb-0.5">助力苏超</h2>
+      <p class="text-white/80 text-sm font-medium max-w-xs" id="call-tagline">为金陵城喝彩，共筑南京体育精神</p>
+    </div>
+  </section>
+
+  <!-- Progress Card -->
+  <section class="px-5 -mt-3 relative z-20">
+    <div class="bg-surface-container-lowest rounded-xl p-4 soft-elevation">
+      <div class="flex justify-between items-start mb-3">
+        <div>
+          <h3 class="font-headline font-bold text-primary text-base mb-0.5">城市助力进度</h3>
+          <p class="text-xs text-on-surface-variant leading-relaxed">目前已有上万名市民参与，点击下方助力，为城市赢取苏超专属周边奖励。</p>
+        </div>
+        <div class="bg-secondary-fixed text-on-secondary-fixed p-1.5 rounded-lg flex flex-col items-center min-w-[44px]">
+          <span class="text-[9px] font-bold">排行</span>
+          <span class="text-base font-black" id="call-rank-num">02</span>
+        </div>
+      </div>
+      <div>
+        <div class="flex justify-between text-[11px] mb-1.5">
+          <span class="text-on-surface-variant font-medium">目标 200万票</span>
+          <span class="text-primary font-bold" id="call-vote-count">1,240,582 / 2,000,000</span>
+        </div>
+        <div class="w-full h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+          <div id="call-progress" class="h-full bg-gradient-to-r from-primary to-primary-container rounded-full progress-fill" style="width:62%"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Called Status -->
+  <section id="called-status" class="px-5 mt-4 hidden">
+    <div class="bg-primary-fixed/30 rounded-xl p-3.5 border border-primary-fixed flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 bg-primary-container rounded-full flex items-center justify-center text-on-primary-container">
+          <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL'1">check_circle</span>
+        </div>
+        <div>
+          <p class="text-primary font-bold text-xs">今日已打call</p>
+          <p class="text-[10px] text-on-surface-variant">感谢加油</p>
+        </div>
+      </div>
+      <div class="text-right">
+        <p class="text-[8px] text-outline uppercase font-bold tracking-wider">预约码</p>
+        <p class="text-sm font-headline font-black text-on-surface tracking-tight" id="call-my-code">ABC-NJ-9921</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Button -->
+  <section class="px-5 mt-5">
+    <button id="call-main-btn" onclick="handleCall()" class="w-full h-12 bg-gradient-to-r from-primary to-primary-container rounded-xl flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-transform cursor-pointer relative call-pulse">
+      <span class="text-lg" id="call-emoji">👆</span>
+      <span class="text-on-primary font-headline text-base font-bold" id="call-btn-label">为南京加油</span>
+    </button>
+    <div class="grid grid-cols-2 gap-2.5 mt-2.5">
+      <button class="bg-surface-container-low p-3.5 rounded-xl flex flex-col items-center justify-center gap-1 cursor-pointer active:scale-95 transition-transform">
+        <span class="material-symbols-outlined text-primary text-lg">stadium</span>
+        <span class="text-[11px] font-bold text-on-surface">赛事资讯</span>
+        <span class="text-[9px] text-on-surface-variant">查看赛程安排</span>
+      </button>
+      <button class="bg-surface-container-low p-3.5 rounded-xl flex flex-col items-center justify-center gap-1 cursor-pointer active:scale-95 transition-transform">
+        <span class="material-symbols-outlined text-secondary text-lg">card_giftcard</span>
+        <span class="text-[11px] font-bold text-on-surface">周边礼品</span>
+        <span class="text-[9px] text-on-surface-variant">核销并领取预约周边</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="px-5 mt-6">
+    <h4 class="font-headline font-bold text-on-surface-variant mb-3 px-1 text-sm">城市动态</h4>
+    <div class="grid grid-cols-2 gap-2.5">
+      <div class="col-span-2 relative h-32 rounded-2xl overflow-hidden shadow-sm">
+        <img id="call-bento-img" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1459865264687-595d652de67e?w=600&q=80" alt="stadium"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-on-surface/70 to-transparent"></div>
+        <div class="absolute bottom-3 left-3.5">
+          <span class="text-[9px] bg-secondary-fixed text-on-secondary-fixed px-2 py-0.5 rounded font-bold uppercase tracking-widest">Live</span>
+          <h5 class="text-white font-bold text-sm mt-1" id="call-bento-title">南京奥体中心准备就绪</h5>
+        </div>
+      </div>
+      <div class="bg-surface-container-lowest p-3.5 rounded-xl shadow-sm">
+        <div class="text-xl font-headline font-black text-primary mb-0.5" id="call-stat-new">12k</div>
+        <div class="text-[9px] font-bold text-outline uppercase tracking-wider">今日新增助力</div>
+      </div>
+      <div class="bg-surface-container-lowest p-3.5 rounded-xl shadow-sm">
+        <div class="text-xl font-headline font-black text-secondary mb-0.5">98%</div>
+        <div class="text-[9px] font-bold text-outline uppercase tracking-wider">热情指数</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- FAB -->
+<div class="fixed bottom-5 right-5 z-50">
+  <button class="w-11 h-11 bg-primary text-on-primary rounded-full shadow-[0_8px_32px_rgba(0,105,80,0.3)] flex items-center justify-center hover:scale-105 active:scale-95 transition-all cursor-pointer">
+    <span class="material-symbols-outlined text-lg">help_outline</span>
+  </button>
+</div>
+</div>
+
+
+<!-- ======================== PAGE: MY CODES ======================== -->
+<div id="page-codes" class="page">
+<nav class="fixed top-0 w-full z-50 bg-[#f8faf9]/80 backdrop-blur-md">
+  <div class="flex items-center justify-between px-5 h-16 max-w-screen-xl mx-auto">
+    <button onclick="showPage('home')" class="flex items-center gap-2 cursor-pointer">
+      <span class="material-symbols-outlined text-[#008566]">arrow_back</span>
+      <span class="font-headline font-black tracking-tighter text-[#008566] text-sm">CITY CHEER</span>
+    </button>
+    <div class="font-headline font-bold tracking-tight text-[#008566] text-sm">我的码册</div>
+  </div>
+</nav>
+
+<main class="pt-16 pb-32 px-5 max-w-md mx-auto">
+  <header class="mb-6 mt-3">
+    <h1 class="font-headline font-extrabold text-xl text-primary tracking-tight leading-tight">助力苏超<br/>预约赢精彩周边</h1>
+    <div class="mt-1.5 h-1 w-10 bg-secondary-fixed rounded-full"></div>
+  </header>
+
+  <div class="bg-surface-container-low p-1.5 rounded-xl flex items-center mb-5">
+    <button class="flex-1 py-2 rounded-lg text-sm font-semibold tab-active transition-all duration-300 cursor-pointer">我的助威码</button>
+    <button class="flex-1 py-2 rounded-lg text-sm font-semibold text-on-surface-variant transition-all duration-300 cursor-pointer">中奖记录</button>
+  </div>
+
+  <div class="flex items-end justify-between mb-4">
+    <div>
+      <p class="text-[9px] font-bold uppercase tracking-widest text-outline mb-0.5">Current City</p>
+      <h2 class="font-headline font-extrabold text-lg text-on-surface flex items-center gap-1">
+        NANJING <span class="text-primary-container text-sm">南京</span>
+      </h2>
+    </div>
+    <div class="bg-primary-fixed px-2 py-0.5 rounded-full flex items-center gap-0.5">
+      <span class="material-symbols-outlined text-[11px] font-bold text-primary">location_on</span>
+      <span class="text-[8px] font-bold text-primary">江苏地区专享</span>
+    </div>
+  </div>
+
+  <div class="space-y-3">
+    <!-- Card: Ready -->
+    <div class="bg-surface-container-lowest p-4 rounded-xl border-l-4 border-primary shadow-[0_4px_20px_-4px_rgba(0,105,80,0.08)] fade-in-up">
+      <div class="flex justify-between items-start mb-2">
+        <div>
+          <div class="text-[9px] font-bold text-outline mb-0.5">SERIAL NUMBER</div>
+          <div class="font-headline font-bold text-base tracking-tight">CH-8829-XJ</div>
+        </div>
+      </div>
+      <div class="flex items-center justify-between pt-2.5 border-t border-surface-container-highest/30">
+        <div class="flex -space-x-1.5">
+          <div class="w-6 h-6 rounded-full border-2 border-surface bg-surface-container flex items-center justify-center overflow-hidden">
+            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt=""/>
+          </div>
+          <div class="w-6 h-6 rounded-full border-2 border-surface bg-surface-container flex items-center justify-center">
+            <span class="material-symbols-outlined text-[10px] text-primary" style="font-variation-settings:'FILL'1">check</span>
+          </div>
+        </div>
+        <button class="bg-gradient-to-r from-primary to-primary-container text-on-primary px-3.5 py-1.5 rounded-lg text-xs font-bold active:scale-95 transition-all cursor-pointer">去领奖</button>
+      </div>
+    </div>
+
+    <!-- Card: Collecting -->
+    <div class="bg-surface-container-low p-4 rounded-xl fade-in-up" style="animation-delay:0.1s">
+      <div class="flex justify-between items-start mb-2">
+        <div>
+          <div class="text-[9px] font-bold text-outline mb-0.5">SERIAL NUMBER</div>
+          <div class="font-headline font-bold text-base tracking-tight text-on-surface/60">CH-9214-NJ</div>
+        </div>
+        <span class="text-[8px] font-bold text-primary bg-primary/10 px-1.5 py-0.5 rounded-full">收集中</span>
+      </div>
+      <div class="mt-1.5">
+        <div class="flex justify-between text-[10px] mb        <div class="flex justify-between text-[10px] mb-1">
+          <span class="text-on-surface-variant">目标 50 票</span>
+          <span class="text-primary font-bold">38 / 50</span>
+        </div>
+        <div class="w-full h-1 bg-surface-container-high rounded-full overflow-hidden">
+          <div class="h-full bg-primary-container rounded-full progress-fill" style="width:76%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card: New Upcoming -->
+    <div class="bg-surface-container-lowest p-4 rounded-xl border-l-4 border-secondary-fixed shadow-[0_4px_20px_-4px_rgba(0,105,80,0.05)] fade-in-up" style="animation-delay:0.2s">
+      <div class="flex justify-between items-start mb-2">
+        <div>
+          <div class="text-[9px] font-bold text-outline mb-0.5">SERIAL NUMBER</div>
+          <div class="font-headline font-bold text-base tracking-tight">CH-7701-YX</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-1.5 mt-0.5">
+        <span class="material-symbols-outlined text-secondary-fixed-dim text-sm" style="font-variation-settings:'FILL'1">stars</span>
+        <p class="text-[10px] text-on-surface-variant font-medium">预计 5月20日 开启周边兑换</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-8 space-y-3">
+    <button onclick="showPage('home')" class="w-full bg-primary py-3.5 rounded-xl text-on-primary font-bold flex items-center justify-center gap-1.5 shadow-lg shadow-primary/20 active:scale-[0.98] transition-all cursor-pointer">
+      返回主会场
+      <span class="material-symbols-outlined text-sm">home</span>
+    </button>
+    <p class="text-center text-[9px] text-outline px-6 leading-relaxed">
+      温馨提示：助威码仅限南京地区用户参与。如有疑问请咨询中国农业银行江苏省分行网点。
+    </p>
+  </div>
+</main>
+
+<footer class="bg-[#f2f4f3] w-full rounded-t-xl mt-6">
+  <div class="flex flex-col items-center py-8 px-6 space-y-4">
+    <div class="flex gap-4">
+      <span class="text-slate-500 font-inter text-[10px] hover:text-[#006950] transition-colors cursor-pointer">服务协议</span>
+      <span class="text-slate-500 font-inter text-[10px] hover:text-[#006950] transition-colors cursor-pointer">隐私政策</span>
+      <span class="text-slate-500 font-inter text-[10px] hover:text-[#006950] transition-colors cursor-pointer">联系我们</span>
+    </div>
+    <p class="font-inter text-[10px] leading-relaxed text-center text-slate-500">
+      © 2024 Agricultural Bank of China. All Rights Reserved.
+    </p>
+  </div>
+</footer>
+</div>
+
+
+<!-- ======================== PAGE: RULES ======================== -->
+<div id="page-rules" class="page">
+<nav class="fixed top-0 w-full z-50 bg-[#f8faf9]/80 backdrop-blur-md">
+  <div class="flex items-center justify-between px-5 h-16 max-w-screen-xl mx-auto">
+    <button onclick="showPage('home')" class="flex items-center gap-2 cursor-pointer">
+      <span class="material-symbols-outlined text-[#008566]">arrow_back</span>
+      <span class="font-headline font-black tracking-tighter text-[#008566] text-sm">CITY CHEER</span>
+    </button>
+    <div class="font-headline font-bold tracking-tight text-[#008566] text-sm">活动规则</div>
+  </div>
+</nav>
+
+<main class="pt-16 pb-12 px-5 space-y-4 max-w-screen-md mx-auto">
+  <!-- Hero Banner -->
+  <div class="editorial-gradient rounded-xl p-6 text-on-primary shadow-lg mt-4 relative overflow-hidden">
+    <div class="relative z-10">
+      <p class="font-label text-[10px] tracking-widest uppercase opacity-80 mb-1">城市助力活动</p>
+      <h1 class="text-2xl font-extrabold tracking-tighter mb-2 leading-tight">助力苏超<br/>预约赢精彩周边</h1>
+      <div class="inline-flex items-center px-2.5 py-1 bg-secondary-fixed text-on-secondary-fixed rounded-full text-[10px] font-bold uppercase tracking-wide">活动规则</div>
+    </div>
+    <div class="absolute top-0 right-0 w-48 h-48 opacity-10 transform translate-x-1/4 -translate-y-1/4 pointer-events-none">
+      <div class="w-full h-full border-4 border-white rounded-full"></div>
+    </div>
+  </div>
+
+  <!-- Activity Target -->
+  <section class="bg-surface-container-low rounded-xl p-4">
+    <div class="flex items-center gap-2 mb-2">
+      <div class="w-1 h-5 bg-primary rounded-full"></div>
+      <h2 class="text-base font-bold text-primary">活动对象</h2>
+    </div>
+    <p class="text-sm text-on-surface-variant leading-relaxed">江苏农行掌银用户（本活动仅限江苏省内个人银行卡客户参与）</p>
+  </section>
+
+  <!-- Activity Time -->
+  <section class="bg-surface-container-low rounded-xl p-4">
+    <div class="flex items-center gap-2 mb-2">
+      <div class="w-1 h-5 bg-primary rounded-full"></div>
+      <h2 class="text-base font-bold text-primary">活动时间</h2>
+    </div>
+    <div class="flex items-center gap-1.5 text-sm text-on-surface-variant">
+      <span class="material-symbols-outlined text-xs text-primary">calendar_today</span>
+      <span>2026年5月1日 - 2026年5月31日</span>
+    </div>
+  </section>
+
+  <!-- Activity Flow -->
+  <section class="bg-surface-container-low rounded-xl p-4">
+    <div class="flex items-center gap-2 mb-4">
+      <div class="w-1 h-5 bg-primary rounded-full"></div>
+      <h2 class="text-base font-bold text-primary">活动流程</h2>
+    </div>
+    <div class="relative space-y-5 pl-3">
+      <div class="absolute left-[5px] top-2 bottom-2 w-0.5 bg-outline-variant/30"></div>
+      <div class="relative flex gap-3">
+        <div class="absolute left-[-3px] top-1 w-2.5 h-2.5 rounded-full bg-primary ring-3 ring-primary/20"></div>
+        <div>
+          <p class="font-bold text-xs text-primary mb-0.5">阶段 1: 预约申请</p>
+          <p class="text-xs text-on-surface-variant">用户登录农行掌银活动页面，完成"苏超"专属预约登记。</p>
+        </div>
+      </div>
+      <div class="relative flex gap-3">
+        <div class="absolute left-[-3px] top-1 w-2.5 h-2.5 rounded-full bg-secondary-fixed ring-3 ring-secondary-fixed/30"></div>
+        <div>
+          <p class="font-bold text-xs text-secondary mb-0.5">阶段 2: 开奖公示</p>
+          <p class="text-xs text-on-surface-variant">活动结束后，系统自动抽奖并公示。中奖信息将通过掌银通知或短信发送。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rules Grid -->
+  <section class="bg-surface-container-low rounded-xl p-4">
+    <div class="flex items-center gap-2 mb-4">
+      <div class="w-1 h-5 bg-primary rounded-full"></div>
+      <h2 class="text-base font-bold text-primary">细则说明</h2>
+    </div>
+    <div class="grid grid-cols-2 gap-2.5">
+      <div class="bg-surface-container-lowest p-3 rounded-lg border border-outline-variant/20">
+        <div class="flex items-center gap-1.5 mb-1.5 text-primary">
+          <span class="material-symbols-outlined text-sm">counter_1</span>
+          <span class="font-semibold text-xs">限制次数</span>
+        </div>
+        <p class="text-[10px] text-on-surface-variant leading-relaxed">每个有效账户活动期间仅限参与一次预约抽奖。</p>
+      </div>
+      <div class="bg-surface-container-lowest p-3 rounded-lg border border-outline-variant/20">
+        <div class="flex items-center gap-1.5 mb-1.5 text-primary">
+          <span class="material-symbols-outlined text-sm">verified_user</span>
+          <span class="font-semibold text-xs">实名要求</span>
+        </div>
+        <p class="text-[10px] text-on-surface-variant leading-relaxed">须完成农行实名认证，绑卡信息真实有效方可兑奖。</p>
+      </div>
+      <div class="col-span-2 bg-surface-container-lowest p-3 rounded-lg border border-outline-variant/20">
+        <div class="flex items-center gap-1.5 mb-1.5 text-primary">
+          <span class="material-symbols-outlined text-sm">gavel</span>
+          <span class="font-semibold text-xs">反作弊说明</span>
+        </div>
+        <p class="text-[10px] text-on-surface-variant leading-relaxed">如发现违规参与行为（包括但不限于虚拟账号、恶意刷奖等），主办方有权取消其活动资格及中奖名额。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="bg-primary/5 rounded-xl p-4 border-l-4 border-primary">
+    <div class="flex items-center gap-2 mb-3">
+      <span class="material-symbols-outlined text-primary text-lg">contact_support</span>
+      <h2 class="text-sm font-bold text-primary">联系与反馈</h2>
+    </div>
+    <div class="space-y-1.5">
+      <div class="flex justify-between items-center text-xs">
+        <span class="text-on-surface-variant">南京飞瀚网络技术支持:</span>
+        <a class="text-primary font-bold" href="tel:4001118119">400-111-8119</a>
+      </div>
+      <div class="flex justify-between items-center text-xs">
+        <span class="text-on-surface-variant">农行客服热线:</span>
+        <a class="text-primary font-bold" href="tel:95599">95599</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer Image -->
+  <div class="mt-2">
+    <img class="w-full h-28 object-cover rounded-xl shadow-md" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80" alt="bank"/>
+  </div>
+</main>
+
+<footer class="bg-[#f2f4f3] w-full rounded-t-xl mt-4">
+  <div class="flex flex-col items-center py-8 px-6 space-y-4">
+    <div class="flex gap-4">
+      <span class="text-slate-500 font-inter text-[10px] hover:text-[#006950] transition-colors cursor-pointer">服务协议</span>
+      <span class="text-slate-500 font-inter text-[10px] hover:text-[#006950] transition-colors cursor-pointer">隐私政策</span>
+      <span class="text-slate-500 font-inter text-[10px] hover:text-[#006950] transition-colors cursor-pointer">联系我们</span>
+    </div>
+    <p class="font-inter text-[10px] leading-relaxed text-center text-slate-500">
+      © 2024 Agricultural Bank of China. All Rights Reserved.
+    </p>
+  </div>
+</footer>
+</div>
+
+
+<!-- ======================== SUCCESS TOAST ======================== -->
+<div id="success-toast" class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 hidden">
+  <div class="bg-white rounded-2xl p-6 flex flex-col items-center gap-3 mx-6 shadow-2xl pop-in" style="min-width:260px">
+    <div class="w-14 h-14 bg-primary-fixed rounded-full flex items-center justify-center mb-1">
+      <span class="material-symbols-outlined text-3xl text-primary success-check" style="font-variation-settings:'FILL'1">celebration</span>
+    </div>
+    <p class="font-headline font-extrabold text-lg text-primary text-center" id="toast-title">助力成功!</p>
+    <p class="text-sm text-on-surface-variant text-center" id="toast-subtitle">感谢您为南京加油</p>
+    <p class="text-[10px] text-outline text-center mt-1" id="toast-code"></p>
+    <button onclick="closeToast()" class="w-full mt-2 bg-primary text-on-primary py-2.5 rounded-xl font-bold text-sm active:scale-95 transition-all cursor-pointer">知道了</button>
+  </div>
+</div>
+
+
+<!-- ======================== JAVASCRIPT ======================== -->
+<script>
+  // City data
+  const cityData = {
+    nanjing: {
+      name: '南京', nameEn: 'NANJING', badge: 'Nanjing | 南京',
+      tagline: '为金陵城喝彩，共筑南京体育精神',
+      rank: '02', votes: '1,240,582', progress: 62,
+      code: 'ABC-NJ-9921', btnText: '为南京加油',
+      heroImg: 'https://images.unsplash.com/photo-1533613220915-609f661a6fe1?w=800&q=80',
+      bentoImg: 'https://images.unsplash.com/photo-1459865264687-595d652de67e?w=600&q=80',
+      bentoTitle: '南京奥体中心准备就绪', statNew: '12k'
+    },
+    suzhou: {
+      name: '苏州', nameEn: 'SUZHOU', badge: 'Suzhou | 苏州',
+      tagline: '江南水乡，足球热情', rank: '02', votes: '1,098,231', progress: 55,
+      code: 'ABC-SZ-3341', btnText: '为苏州加油',
+      heroImg: 'https://images.unsplash.com/photo-1537531383496-f4749b85f923?w=800&q=80',
+      bentoImg: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80',
+      bentoTitle: '苏州奥体中心静候开幕', statNew: '8.2k'
+    },
+    wuxi: {
+      name: '无锡', nameEn: 'WUXI', badge: 'Wuxi | 无锡',
+      tagline: '太湖之滨，激情足球', rank: '03', votes: '945,110', progress: 47,
+      code: 'ABC-WX-7782', btnText: '为无锡加油',
+      heroImg: 'https://images.unsplash.com/photo-1503801475918-7d587e5bd149?w=800&q=80',
+      bentoImg: 'https://images.unsplash.com/photo-1553931666-40ce8d5a4b3e?w=600&q=80',
+      bentoTitle: '无锡新体育中心即将启用', statNew: '6.5k'
+    },
+    xuzhou: {
+      name: '徐州', nameEn: 'XUZHOU', badge: 'Xuzhou | 徐州',
+      tagline: '五省通衢，足球之城', rank: '04', votes: '720,400', progress: 36,
+      code: 'ABC-XZ-5501', btnText: '为徐州加油',
+      heroImg: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80',
+      bentoImg: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&q=80',
+      bentoTitle: '徐州赛区场馆筹备中', statNew: '4.1k'
+    },
+    changzhou: {
+      name: '常州', nameEn: 'CHANGZHOU', badge: 'Changzhou | 常州',
+      tagline: '龙城常州，足球活力', rank: '05', votes: '610,000', progress: 30,
+      code: 'ABC-CZ-2214', btnText: '为常州加油',
+      heroImg: 'https://images.unsplash.com/photo-1493514789931-586cb221d7a7?w=800&q=80',
+      bentoImg: 'https://images.unsplash.com/photo-1540747913346-19212a4b423d?w=600&q=80',
+      bentoTitle: '常州奥体场馆准备就绪', statNew: '3.8k'
+    }
+  };
+
+  const otherCities = ['nantong','lyg','huaian','yancheng','yangzhou','zhenjiang','taizhou','suqian'];
+  otherCities.forEach(city => {
+    cityData[city] = {
+      name: '', nameEn: city.toUpperCase(), badge: city + ' | ' + city,
+      tagline: '为城市加油', rank: '06+', votes: Math.floor(Math.random()*500000+100000).toLocaleString(), progress: Math.floor(Math.random()*30+10),
+      code: 'ABC-' + city.substring(0,2).toUpperCase() + '-' + Math.floor(Math.random()*9000+1000), btnText: '为城市加油',
+      heroImg: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&q=80',
+      bentoImg: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=80',
+      bentoTitle: '城市助力进行中', statNew: Math.floor(Math.random()*5000+500) + 'k'
+    };
+  });
+
+  let calledCities = new Set();
+  let currentCity = 'nanjing';
+
+  function showPage(page, city) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    if (page === 'call' && city) {
+      currentCity = city;
+      const data = cityData[city] || cityData['nanjing'];
+      document.getElementById('call-city-nav-title').textContent = data.name || city;
+      document.getElementById('call-badge').textContent = data.badge;
+      document.getElementById('call-tagline').textContent = data.tagline;
+      document.getElementById('call-rank-num').textContent = data.rank;
+      document.getElementById('call-vote-count').textContent = data.votes + ' / 2,000,000';
+      document.getElementById('call-progress').style.width = data.progress + '%';
+      document.getElementById('call-hero').src = data.heroImg;
+      document.getElementById('call-bento-img').src = data.bentoImg;
+      document.getElementById('call-bento-title').textContent = data.bentoTitle;
+      document.getElementById('call-stat-new').textContent = data.statNew;
+      document.getElementById('call-btn-label').textContent = data.btnText;
+      document.getElementById('call-my-code').textContent = data.code;
+
+      const isCalled = calledCities.has(city);
+      const statusSection = document.getElementById('called-status');
+      const mainBtn = document.getElementById('call-main-btn');
+      const btnLabel = document.getElementById('call-btn-label');
+      const btnEmoji = document.getElementById('call-emoji');
+
+      if (isCalled) {
+        statusSection.classList.remove('hidden');
+        btnLabel.textContent = '今日已助力';
+        btnEmoji.textContent = '✅';
+        mainBtn.classList.remove('call-pulse');
+        mainBtn.style.background = 'linear-gradient(to right, #72d9b5, #8ff6d0)';
+      } else {
+        statusSection.classList.add('hidden');
+        btnLabel.textContent = data.btnText;
+        btnEmoji.textContent = '👆';
+        mainBtn.classList.add('call-pulse');
+        mainBtn.style.background = '';
+      }
+      document.getElementById('page-call').classList.add('active');
+    } else {
+      document.getElementById('page-' + page).classList.add('active');
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function handleCall() {
+    const data = cityData[currentCity] || cityData['nanjing'];
+    const votes = parseInt(data.votes.replace(',',''));
+    const newVotes = votes + 1;
+    const newVotesStr = newVotes.toLocaleString();
+    cityData[currentCity].votes = newVotesStr;
+    cityData[currentCity].progress = Math.min(Math.round(newVotes / 2000000 * 100), 99);
+
+    calledCities.add(currentCity);
+
+    // Update call page
+    document.getElementById('call-vote-count').textContent = newVotesStr + ' / 2,000,000';
+    document.getElementById('call-progress').style.width = cityData[currentCity].progress + '%';
+    document.getElementById('call-stat-new').textContent = Math.floor(newVotes - 1240582 + 12000).toLocaleString();
+
+    const statusSection = document.getElementById('called-status');
+    const mainBtn = document.getElementById('call-main-btn');
+    document.getElementById('call-btn-label').textContent = '今日已助力';
+    document.getElementById('call-emoji').textContent = '✅';
+    mainBtn.classList.remove('call-pulse');
+    mainBtn.style.background = 'linear-gradient(to right, #72d9b5, #8ff6d0)';
+    statusSection.classList.remove('hidden');
+
+    // Show toast with confetti
+    spawnConfetti();
+    const code = data.code;
+    document.getElementById('toast-title').textContent = '助力成功!';
+    document.getElementById('toast-subtitle').textContent = '感谢您为' + (data.name || currentCity) + '加油';
+    document.getElementById('toast-code').textContent = '预约码: ' + code;
+    document.getElementById('success-toast').classList.remove('hidden');
+  }
+
+  function closeToast() {
+    document.getElementById('success-toast').classList.add('hidden');
+  }
+
+  function spawnConfetti() {
+    const colors = ['#006950','#8ff6d0','#ffe085','#e1e3e2','#008566','#fedd7c'];
+    const container = document.body;
+    for (let i = 0; i < 40; i++) {
+      const el = document.createElement('div');
+      el.className = 'confetti-piece';
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.top = Math.random() * 40 + 30 + 'vh';
+      el.style.background = colors[Math.floor(Math.random() * colors.length)];
+      el.style.animationDuration = (Math.random() * 1 + 1) + 's';
+      el.style.animationDelay = (Math.random() * 0.5) + 's';
+      el.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      container.appendChild(el);
+      setTimeout(() => el.remove(), 2500);
+    }
+  }
+
+  // Close toast on backdrop click
+  document.getElementById('success-toast').addEventListener('click', function(e) {
+    if (e.target === this) closeToast();
+  });
+</script>
+</body>
+</html>
