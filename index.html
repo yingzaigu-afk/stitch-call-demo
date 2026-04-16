@@ -316,28 +316,47 @@
 
   <!-- Prizes -->
   <section class="mt-8 px-5">
-    <h2 class="font-headline font-extrabold text-base mb-3">预约赢好礼</h2>
-    <div class="flex gap-2.5 overflow-x-auto pb-4 -mx-5 px-5 no-scrollbar">
-      <div class="min-w-[130px] bg-surface-container-lowest rounded-xl p-3 soft-elevation flex-shrink-0">
-        <div class="aspect-square rounded-lg bg-surface-container mb-2.5 overflow-hidden">
-          <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=300&q=80" alt="卫衣"/>
-        </div>
-        <p class="font-bold text-[11px] text-on-surface">定制运动卫衣</p>
-        <p class="text-primary font-bold text-[10px] mt-1">预约抽取</p>
+    <div class="flex items-end justify-between mb-3">
+      <div>
+        <h2 class="font-headline font-extrabold text-base text-primary">预约赢好礼</h2>
+        <p class="text-outline text-xs mt-0.5">每日抽取幸运用户获得城市专属玩偶</p>
       </div>
-      <div class="min-w-[130px] bg-surface-container-lowest rounded-xl p-3 soft-elevation flex-shrink-0">
-        <div class="aspect-square rounded-lg bg-surface-container mb-2.5 overflow-hidden">
-          <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=300&q=80" alt="足球"/>
-        </div>
-        <p class="font-bold text-[11px] text-on-surface">苏超联名足球</p>
-        <p class="text-primary font-bold text-[10px] mt-1">预约抽取</p>
+      <button onclick="showPage('results')" class="text-primary text-[10px] font-bold flex items-center gap-0.5 cursor-pointer">
+        开奖公示
+        <span class="material-symbols-outlined text-sm">chevron_right</span>
+      </button>
+    </div>
+    <div class="bg-surface-container-lowest rounded-xl p-3 soft-elevation">
+      <div class="aspect-video rounded-lg bg-surface-container mb-3 overflow-hidden">
+        <img class="w-full h-full object-cover" src="sududu.jpg" alt="苏嘟嘟十三太保系列"/>
       </div>
-      <div class="min-w-[130px] bg-surface-container-lowest rounded-xl p-3 soft-elevation flex-shrink-0">
-        <div class="aspect-square rounded-lg bg-surface-container mb-2.5 overflow-hidden">
-          <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=300&q=80" alt="保温杯"/>
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="font-bold text-sm text-on-surface">苏嘟嘟十三太保系列</p>
+          <p class="text-[10px] text-on-surface-variant mt-0.5">2026年江苏省城市足球联赛官方吉祥物</p>
         </div>
-        <p class="font-bold text-[11px] text-on-surface">限量版保温杯</p>
-        <p class="text-primary font-bold text-[10px] mt-1">预约抽取</p>
+        <div class="bg-primary/10 px-2 py-1 rounded-full">
+          <span class="text-primary text-[9px] font-bold">每日抽取</span>
+        </div>
+      </div>
+      <div class="mt-3 bg-secondary-fixed/20 rounded-lg p-2.5">
+        <p class="text-[9px] text-on-secondary-fixed font-bold mb-1">🐬 苏嘟嘟设计理念</p>
+        <p class="text-[8px] text-on-surface-variant leading-relaxed">以长江江豚为原型，融合昆曲水袖、茉莉花等江苏元素，每个城市还有专属形象哦~</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Activity Time Banner -->
+  <section class="mt-6 px-5">
+    <div class="bg-gradient-to-r from-primary/10 to-tertiary-container/30 rounded-xl p-4 border border-primary/20">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+          <span class="material-symbols-outlined text-white text-lg" style="font-variation-settings:'FILL'1">schedule</span>
+        </div>
+        <div>
+          <p class="font-bold text-xs text-primary">活动进行中</p>
+          <p class="text-[10px] text-on-surface-variant mt-0.5">2026年5月15日 - 5月31日 · 每日00:00-20:59</p>
+        </div>
       </div>
     </div>
   </section>
@@ -489,9 +508,9 @@
     <div class="mt-1.5 h-1 w-10 bg-secondary-fixed rounded-full"></div>
   </header>
 
-  <div class="bg-surface-container-low p-1.5 rounded-xl flex items-center mb-5">
-    <button class="flex-1 py-2 rounded-lg text-sm font-semibold tab-active transition-all duration-300 cursor-pointer">我的助威码</button>
-    <button class="flex-1 py-2 rounded-lg text-sm font-semibold text-on-surface-variant transition-all duration-300 cursor-pointer">中奖记录</button>
+  <div class="bg-surface-container-low p-1 rounded-xl flex items-center mb-5">
+    <button id="tab-codes" onclick="switchCodesTab('codes')" class="flex-1 py-2 rounded-lg text-sm font-semibold tab-active transition-all duration-300 cursor-pointer">我的预约码</button>
+    <button id="tab-winners" onclick="switchCodesTab('winners')" class="flex-1 py-2 rounded-lg text-sm font-semibold text-on-surface-variant transition-all duration-300 cursor-pointer">中奖记录</button>
   </div>
 
   <div class="flex items-end justify-between mb-4">
@@ -507,59 +526,93 @@
     </div>
   </div>
 
-  <div class="space-y-3">
-    <!-- Card: Ready -->
+  <div id="codes-content">
+    <div class="space-y-3">
+    <!-- Card: Won - 可领奖 -->
     <div class="bg-surface-container-lowest p-4 rounded-xl border-l-4 border-primary shadow-[0_4px_20px_-4px_rgba(0,105,80,0.08)] fade-in-up">
       <div class="flex justify-between items-start mb-2">
         <div>
-          <div class="text-[9px] font-bold text-outline mb-0.5">SERIAL NUMBER</div>
-          <div class="font-headline font-bold text-base tracking-tight">CH-8829-XJ</div>
+          <div class="flex items-center gap-1.5 mb-0.5">
+            <span class="bg-primary text-white text-[8px] font-bold px-1.5 py-0.5 rounded">中奖</span>
+            <span class="text-[9px] text-on-surface-variant">南京 · 鸭嘟嘟</span>
+          </div>
+          <div class="font-headline font-bold text-base tracking-tight">100083</div>
         </div>
+        <span class="material-symbols-outlined text-secondary-fixed-dim text-lg" style="font-variation-settings:'FILL'1">emoji_events</span>
       </div>
       <div class="flex items-center justify-between pt-2.5 border-t border-surface-container-highest/30">
-        <div class="flex -space-x-1.5">
-          <div class="w-6 h-6 rounded-full border-2 border-surface bg-surface-container flex items-center justify-center overflow-hidden">
-            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt=""/>
-          </div>
-          <div class="w-6 h-6 rounded-full border-2 border-surface bg-surface-container flex items-center justify-center">
-            <span class="material-symbols-outlined text-[10px] text-primary" style="font-variation-settings:'FILL'1">check</span>
-          </div>
+        <div class="flex items-center gap-1">
+          <span class="material-symbols-outlined text-primary text-sm">schedule</span>
+          <span class="text-[9px] text-on-surface-variant">请在开奖后10个工作日内领取</span>
         </div>
-        <button onclick="goToClaim('CH-8829-XJ', '定制运动卫衣', 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=300&q=80')" class="bg-gradient-to-r from-primary to-primary-container text-on-primary px-3.5 py-1.5 rounded-lg text-xs font-bold active:scale-95 transition-all cursor-pointer">去领奖</button>
+        <button onclick="goToClaim('100083', '南京·鸭嘟嘟苏嘟嘟毛绒玩偶', 'sududu.jpg')" class="bg-gradient-to-r from-primary to-primary-container text-on-primary px-3.5 py-1.5 rounded-lg text-xs font-bold active:scale-95 transition-all cursor-pointer">填写地址</button>
       </div>
     </div>
 
-    <!-- Card: Collecting -->
+    <!-- Card: Pending - 待开奖 -->
     <div class="bg-surface-container-low p-4 rounded-xl fade-in-up" style="animation-delay:0.1s">
       <div class="flex justify-between items-start mb-2">
         <div>
-          <div class="text-[9px] font-bold text-outline mb-0.5">SERIAL NUMBER</div>
-          <div class="font-headline font-bold text-base tracking-tight text-on-surface/60">CH-9214-NJ</div>
+          <div class="flex items-center gap-1.5 mb-0.5">
+            <span class="bg-secondary-fixed text-on-secondary-fixed text-[8px] font-bold px-1.5 py-0.5 rounded">待开奖</span>
+            <span class="text-[9px] text-on-surface-variant">5月16日 20:59报名</span>
+          </div>
+          <div class="font-headline font-bold text-base tracking-tight text-on-surface/70">100241</div>
         </div>
-        <span class="text-[8px] font-bold text-primary bg-primary/10 px-1.5 py-0.5 rounded-full">收集中</span>
+        <span class="text-[8px] text-on-surface-variant">明日12:00开奖</span>
       </div>
-      <div class="mt-1.5">
-        <div class="flex justify-between text-[10px] mb        <div class="flex justify-between text-[10px] mb-1">
-          <span class="text-on-surface-variant">目标 50 票</span>
-          <span class="text-primary font-bold">38 / 50</span>
-        </div>
-        <div class="w-full h-1 bg-surface-container-high rounded-full overflow-hidden">
-          <div class="h-full bg-primary-container rounded-full progress-fill" style="width:76%"></div>
+      <div class="mt-2 pt-2 border-t border-surface-container-highest/30">
+        <div class="flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings:'FILL'1">sports_soccer</span>
+          <span class="text-[9px] text-on-surface-variant">为南京加油获得 · 等待开奖结果</span>
         </div>
       </div>
     </div>
 
-    <!-- Card: New Upcoming -->
-    <div class="bg-surface-container-lowest p-4 rounded-xl border-l-4 border-secondary-fixed shadow-[0_4px_20px_-4px_rgba(0,105,80,0.05)] fade-in-up" style="animation-delay:0.2s">
+    <!-- Card: Not Won - 未中奖 -->
+    <div class="bg-surface-container-low p-4 rounded-xl fade-in-up" style="animation-delay:0.2s">
       <div class="flex justify-between items-start mb-2">
         <div>
-          <div class="text-[9px] font-bold text-outline mb-0.5">SERIAL NUMBER</div>
-          <div class="font-headline font-bold text-base tracking-tight">CH-7701-YX</div>
+          <div class="flex items-center gap-1.5 mb-0.5">
+            <span class="bg-surface-container-high text-on-surface-variant text-[8px] font-bold px-1.5 py-0.5 rounded">未中奖</span>
+            <span class="text-[9px] text-on-surface-variant">5月15日</span>
+          </div>
+          <div class="font-headline font-bold text-base tracking-tight text-on-surface/50">100127</div>
         </div>
       </div>
-      <div class="flex items-center gap-1.5 mt-0.5">
-        <span class="material-symbols-outlined text-secondary-fixed-dim text-sm" style="font-variation-settings:'FILL'1">stars</span>
-        <p class="text-[10px] text-on-surface-variant font-medium">预计 5月20日 开启周边兑换</p>
+      <div class="mt-2 pt-2 border-t border-surface-container-highest/30">
+        <p class="text-[9px] text-on-surface-variant">开奖依据：356082 · 中奖码：100083</p>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- Winners Tab Content -->
+  <div id="winners-content" class="hidden">
+    <div class="space-y-3">
+      <!-- Winner: Claimed -->
+      <div class="bg-primary-fixed/20 border border-primary-fixed/40 p-4 rounded-xl fade-in-up">
+        <div class="flex items-start gap-3">
+          <div class="w-12 h-12 bg-surface rounded-lg overflow-hidden flex-shrink-0">
+            <img src="sududu.jpg" alt="苏嘟嘟" class="w-full h-full object-cover"/>
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center gap-1.5 mb-0.5">
+              <span class="bg-primary text-white text-[8px] font-bold px-1.5 py-0.5 rounded">已领取</span>
+              <span class="text-[9px] text-on-surface-variant">南京 · 鸭嘟嘟</span>
+            </div>
+            <p class="text-xs font-bold text-on-surface">预约码 100083</p>
+            <p class="text-[9px] text-on-surface-variant mt-0.5">领取时间：5月17日 14:32</p>
+          </div>
+          <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL'1">check_circle</span>
+        </div>
+      </div>
+      
+      <!-- Empty State -->
+      <div class="text-center py-8">
+        <span class="material-symbols-outlined text-[48px] text-outline/50">sentiment_dissatisfied</span>
+        <p class="text-sm text-on-surface-variant mt-2">暂无更多中奖记录</p>
+        <p class="text-[10px] text-outline mt-1">每日助力，明日还有机会哦~</p>
       </div>
     </div>
   </div>
@@ -570,7 +623,7 @@
       <span class="material-symbols-outlined text-sm">home</span>
     </button>
     <p class="text-center text-[9px] text-outline px-6 leading-relaxed">
-      温馨提示：助威码仅限南京地区用户参与。如有疑问请咨询中国农业银行江苏省分行网点。
+      温馨提示：每个手机号每日仅限参与一次预约抽奖。如有疑问请咨询中国农业银行江苏省分行网点。
     </p>
   </div>
 </main>
@@ -607,11 +660,11 @@
   <section class="mt-4">
     <div class="bg-primary-fixed/20 border border-primary-fixed/40 rounded-xl p-4 flex gap-3">
       <div class="w-16 h-16 rounded-lg bg-surface overflow-hidden flex-shrink-0">
-        <img id="claim-prize-img" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=300&q=80" alt="奖品"/>
+        <img id="claim-prize-img" class="w-full h-full object-cover" src="sududu.jpg" alt="苏嘟嘟"/>
       </div>
       <div class="flex-1 min-w-0">
-        <p class="font-bold text-sm text-on-surface" id="claim-prize-name">定制运动卫衣</p>
-        <p class="text-[10px] text-on-surface-variant mt-0.5">预约码: <span class="text-primary font-semibold" id="claim-prize-code">CH-8829-XJ</span></p>
+        <p class="font-bold text-sm text-on-surface" id="claim-prize-name">南京·鸭嘟嘟苏嘟嘟毛绒玩偶</p>
+        <p class="text-[10px] text-on-surface-variant mt-0.5">预约码: <span class="text-primary font-semibold" id="claim-prize-code">100083</span></p>
         <div class="mt-1.5 inline-flex items-center gap-1 bg-primary/10 px-2 py-0.5 rounded-full">
           <span class="material-symbols-outlined text-primary text-xs" style="font-variation-settings:'FILL'1">verified_user</span>
           <span class="text-[9px] text-primary font-bold">已核销可领取</span>
@@ -760,6 +813,148 @@
 </div>
 
 
+<!-- ======================== PAGE: LOTTERY RESULTS (开奖公示) ======================== -->
+<div id="page-results" class="page">
+<nav class="fixed top-0 w-full z-50 bg-[#f8faf9]/80 backdrop-blur-md">
+  <div class="flex items-center justify-between px-5 h-16 max-w-screen-xl mx-auto">
+    <button onclick="showPage('home')" class="flex items-center gap-2 cursor-pointer">
+      <span class="material-symbols-outlined text-[#008566]">arrow_back</span>
+      <span class="font-headline font-black tracking-tighter text-[#008566] text-sm">CITY CHEER</span>
+    </button>
+    <div class="font-headline font-bold tracking-tight text-[#008566] text-sm">开奖公示</div>
+  </div>
+</nav>
+
+<main class="pt-16 pb-12 px-5 max-w-md mx-auto space-y-4">
+  <!-- Header -->
+  <section class="mt-4">
+    <div class="editorial-gradient rounded-xl p-5 text-on-primary relative overflow-hidden">
+      <div class="absolute top-0 right-0 opacity-10">
+        <span class="material-symbols-outlined text-[80px]" style="font-variation-settings:'FILL'1">emoji_events</span>
+      </div>
+      <p class="font-label text-[10px] tracking-widest uppercase opacity-80">开奖公示</p>
+      <h1 class="font-headline font-extrabold text-xl tracking-tight mt-1">中奖预约码公布</h1>
+      <p class="text-[10px] opacity-80 mt-1">次日上午12:00前更新前一日中奖结果</p>
+    </div>
+  </section>
+
+  <!-- Latest Result -->
+  <section class="bg-surface-container-lowest rounded-xl p-4 soft-elevation">
+    <div class="flex items-center gap-2 mb-3">
+      <div class="w-1 h-5 bg-secondary-fixed rounded-full"></div>
+      <h2 class="text-sm font-bold text-primary">最新中奖公布</h2>
+      <span class="bg-secondary-fixed text-on-secondary-fixed text-[8px] font-bold px-1.5 py-0.5 rounded-full ml-auto">5月16日</span>
+    </div>
+    
+    <div class="space-y-3">
+      <!-- Winner Card -->
+      <div class="bg-primary-fixed/20 border border-primary-fixed/40 rounded-xl p-3">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="material-symbols-outlined text-primary text-lg" style="font-variation-settings:'FILL'1">celebration</span>
+          <span class="font-bold text-xs text-primary">南京 · 鸭嘟嘟</span>
+        </div>
+        <div class="flex justify-between items-center">
+          <div>
+            <p class="text-[9px] text-outline uppercase tracking-wider">中奖预约码</p>
+            <p class="font-headline font-black text-lg text-on-surface">100083</p>
+          </div>
+          <div class="text-right">
+            <p class="text-[9px] text-outline">开奖依据</p>
+            <p class="text-[10px] text-on-surface-variant">福彩3D 356 · 排列三 082</p>
+          </div>
+        </div>
+        <div class="mt-2 pt-2 border-t border-primary/10">
+          <p class="text-[9px] text-on-surface-variant">计算：(356082 ÷ 2000 余数 82) + 100001 = <span class="font-bold text-primary">100083</span></p>
+        </div>
+      </div>
+
+      <!-- More Winners -->
+      <div class="grid grid-cols-2 gap-2">
+        <div class="bg-surface-container-low p-2.5 rounded-lg">
+          <p class="text-[9px] text-outline">苏州 · 蟹嘟嘟</p>
+          <p class="font-headline font-bold text-sm text-on-surface mt-0.5">100127</p>
+        </div>
+        <div class="bg-surface-container-low p-2.5 rounded-lg">
+          <p class="text-[9px] text-outline">无锡 · 甜嘟嘟</p>
+          <p class="font-headline font-bold text-sm text-on-surface mt-0.5">100201</p>
+        </div>
+        <div class="bg-surface-container-low p-2.5 rounded-lg">
+          <p class="text-[9px] text-outline">徐州 · 虎嘟嘟</p>
+          <p class="font-headline font-bold text-sm text-on-surface mt-0.5">100056</p>
+        </div>
+        <div class="bg-surface-container-low p-2.5 rounded-lg">
+          <p class="text-[9px] text-outline">常州 · 龙嘟嘟</p>
+          <p class="font-headline font-bold text-sm text-on-surface mt-0.5">100189</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- History -->
+  <section class="bg-surface-container-lowest rounded-xl p-4 soft-elevation">
+    <div class="flex items-center gap-2 mb-3">
+      <div class="w-1 h-5 bg-primary rounded-full"></div>
+      <h2 class="text-sm font-bold text-primary">往期中奖</h2>
+    </div>
+    
+    <div class="space-y-2">
+      <div class="flex justify-between items-center py-2 border-b border-surface-container-high/30">
+        <div>
+          <p class="text-[10px] text-on-surface-variant">5月15日</p>
+          <p class="font-bold text-xs text-on-surface mt-0.5">13城市中奖预约码</p>
+        </div>
+        <span class="text-primary text-[9px] font-bold cursor-pointer">查看详情 →</span>
+      </div>
+      <div class="flex justify-between items-center py-2">
+        <div>
+          <p class="text-[10px] text-on-surface-variant">5月14日（测试场）</p>
+          <p class="font-bold text-xs text-on-surface mt-0.5">系统调试中，暂不计入正式活动</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Algorithm Explanation -->
+  <section class="bg-surface-container-lowest rounded-xl p-4 soft-elevation">
+    <div class="flex items-center gap-2 mb-3">
+      <div class="w-1 h-5 bg-tertiary rounded-full"></div>
+      <h2 class="text-sm font-bold text-primary">抽奖算法说明</h2>
+    </div>
+    
+    <div class="space-y-3 text-[10px] text-on-surface-variant">
+      <div class="bg-surface-container-low rounded-lg p-3">
+        <p class="font-bold text-on-surface mb-1">① 随机数来源</p>
+        <p>取当日福彩3D（000-999）和体彩排列三（000-999）开奖号码，拼接为6位随机数</p>
+      </div>
+      
+      <div class="bg-surface-container-low rounded-lg p-3">
+        <p class="font-bold text-on-surface mb-1">② 中奖计算公式</p>
+        <p class="font-mono text-[9px]">中奖码 = (随机数 % 当日总参与人数) + 100001</p>
+      </div>
+      
+      <div class="bg-surface-container-low rounded-lg p-3">
+        <p class="font-bold text-on-surface mb-1">③ 数据来源</p>
+        <p>福彩3D：www.cwl.gov.cn ｜ 排列三：www.lottery.gov.cn</p>
+      </div>
+    </div>
+    
+    <div class="mt-4 bg-secondary-fixed/20 rounded-lg p-3">
+      <p class="text-[9px] font-bold text-on-secondary-fixed mb-1">💡 计算示例</p>
+      <p class="text-[9px] text-on-surface-variant leading-relaxed">假设某日南京参与人数2000人，福彩3D=356，排列三=082<br/>随机数=356082 → 356082%2000=82 → 100001+82=<span class="font-bold text-primary">100083</span></p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="mt-2">
+    <button onclick="showPage('call','nanjing')" class="w-full h-12 bg-gradient-to-r from-primary to-primary-container rounded-xl flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-all cursor-pointer">
+      <span class="text-on-primary font-headline text-sm font-bold">前往助力获取预约码</span>
+    </button>
+    <button onclick="showPage('codes')" class="w-full mt-2 py-3 text-primary text-xs font-bold cursor-pointer">查看我的预约码</button>
+  </section>
+</main>
+</div>
+
+
 <!-- ======================== PAGE: RULES ======================== -->
 <div id="page-rules" class="page">
 <nav class="fixed top-0 w-full z-50 bg-[#f8faf9]/80 backdrop-blur-md">
@@ -776,88 +971,122 @@
   <!-- Hero Banner -->
   <div class="editorial-gradient rounded-xl p-6 text-on-primary shadow-lg mt-4 relative overflow-hidden">
     <div class="relative z-10">
-      <p class="font-label text-[10px] tracking-widest uppercase opacity-80 mb-1">城市助力活动</p>
+      <p class="font-label text-[10px] tracking-widest uppercase opacity-80 mb-1">活动规则</p>
       <h1 class="text-2xl font-extrabold tracking-tighter mb-2 leading-tight">助力苏超<br/>预约赢精彩周边</h1>
-      <div class="inline-flex items-center px-2.5 py-1 bg-secondary-fixed text-on-secondary-fixed rounded-full text-[10px] font-bold uppercase tracking-wide">活动规则</div>
+      <div class="inline-flex items-center px-2.5 py-1 bg-secondary-fixed text-on-secondary-fixed rounded-full text-[10px] font-bold uppercase tracking-wide">苏嘟嘟城市毛绒玩偶</div>
     </div>
-    <div class="absolute top-0 right-0 w-48 h-48 opacity-10 transform translate-x-1/4 -translate-y-1/4 pointer-events-none">
-      <div class="w-full h-full border-4 border-white rounded-full"></div>
+    <div class="absolute top-0 right-0 opacity-10">
+      <span class="material-symbols-outlined text-[80px]" style="font-variation-settings:'FILL'1">sports_soccer</span>
     </div>
   </div>
 
-  <!-- Activity Target -->
+  <!-- Activity Basic Info -->
   <section class="bg-surface-container-low rounded-xl p-4">
-    <div class="flex items-center gap-2 mb-2">
+    <div class="flex items-center gap-2 mb-3">
       <div class="w-1 h-5 bg-primary rounded-full"></div>
-      <h2 class="text-base font-bold text-primary">活动对象</h2>
+      <h2 class="text-base font-bold text-primary">一、基本信息</h2>
     </div>
-    <p class="text-sm text-on-surface-variant leading-relaxed">江苏农行掌银用户（本活动仅限江苏省内个人银行卡客户参与）</p>
-  </section>
-
-  <!-- Activity Time -->
-  <section class="bg-surface-container-low rounded-xl p-4">
-    <div class="flex items-center gap-2 mb-2">
-      <div class="w-1 h-5 bg-primary rounded-full"></div>
-      <h2 class="text-base font-bold text-primary">活动时间</h2>
-    </div>
-    <div class="flex items-center gap-1.5 text-sm text-on-surface-variant">
-      <span class="material-symbols-outlined text-xs text-primary">calendar_today</span>
-      <span>2026年5月1日 - 2026年5月31日</span>
-    </div>
-  </section>
-
-  <!-- Activity Flow -->
-  <section class="bg-surface-container-low rounded-xl p-4">
-    <div class="flex items-center gap-2 mb-4">
-      <div class="w-1 h-5 bg-primary rounded-full"></div>
-      <h2 class="text-base font-bold text-primary">活动流程</h2>
-    </div>
-    <div class="relative space-y-5 pl-3">
-      <div class="absolute left-[5px] top-2 bottom-2 w-0.5 bg-outline-variant/30"></div>
-      <div class="relative flex gap-3">
-        <div class="absolute left-[-3px] top-1 w-2.5 h-2.5 rounded-full bg-primary ring-3 ring-primary/20"></div>
+    <div class="space-y-2">
+      <div class="flex items-start gap-2">
+        <span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span>
         <div>
-          <p class="font-bold text-xs text-primary mb-0.5">阶段 1: 预约申请</p>
-          <p class="text-xs text-on-surface-variant">用户登录农行掌银活动页面，完成"苏超"专属预约登记。</p>
+          <p class="text-xs font-bold text-on-surface">活动主题</p>
+          <p class="text-[10px] text-on-surface-variant">助力苏超 预约赢精彩周边</p>
         </div>
       </div>
-      <div class="relative flex gap-3">
-        <div class="absolute left-[-3px] top-1 w-2.5 h-2.5 rounded-full bg-secondary-fixed ring-3 ring-secondary-fixed/30"></div>
+      <div class="flex items-start gap-2">
+        <span class="material-symbols-outlined text-primary text-sm mt-0.5">person</span>
         <div>
-          <p class="font-bold text-xs text-secondary mb-0.5">阶段 2: 开奖公示</p>
-          <p class="text-xs text-on-surface-variant">活动结束后，系统自动抽奖并公示。中奖信息将通过掌银通知或短信发送。</p>
+          <p class="text-xs font-bold text-on-surface">活动对象</p>
+          <p class="text-[10px] text-on-surface-variant">江苏农行掌银用户（本活动仅限江苏省内个人银行卡客户参与）</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-2">
+        <span class="material-symbols-outlined text-primary text-sm mt-0.5">calendar_today</span>
+        <div>
+          <p class="text-xs font-bold text-on-surface">活动时间</p>
+          <p class="text-[10px] text-primary font-semibold">2026年5月15日 00:00:00 至 2026年5月31日 23:59:59</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-2">
+        <span class="material-symbols-outlined text-primary text-sm mt-0.5">card_giftcard</span>
+        <div>
+          <p class="text-xs font-bold text-on-surface">活动奖品</p>
+          <p class="text-[10px] text-on-surface-variant">2026年江苏省城市足球联赛"苏嘟嘟十三太保系列"城市毛绒玩偶（每个城市每日抽取1名幸运用户）</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Rules Grid -->
+  <!-- Activity Content -->
   <section class="bg-surface-container-low rounded-xl p-4">
-    <div class="flex items-center gap-2 mb-4">
+    <div class="flex items-center gap-2 mb-3">
       <div class="w-1 h-5 bg-primary rounded-full"></div>
-      <h2 class="text-base font-bold text-primary">细则说明</h2>
+      <h2 class="text-base font-bold text-primary">二、活动内容</h2>
     </div>
-    <div class="grid grid-cols-2 gap-2.5">
-      <div class="bg-surface-container-lowest p-3 rounded-lg border border-outline-variant/20">
-        <div class="flex items-center gap-1.5 mb-1.5 text-primary">
-          <span class="material-symbols-outlined text-sm">counter_1</span>
-          <span class="font-semibold text-xs">限制次数</span>
+    
+    <div class="space-y-4">
+      <!-- Phase 1 -->
+      <div class="bg-surface-container-lowest rounded-lg p-3">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="w-6 h-6 bg-primary rounded-full flex items-center justify-center text-white text-xs font-bold">1</span>
+          <p class="font-bold text-sm text-primary">阶段1：获取预约码</p>
         </div>
-        <p class="text-[10px] text-on-surface-variant leading-relaxed">每个有效账户活动期间仅限参与一次预约抽奖。</p>
+        <div class="text-[10px] text-on-surface-variant leading-relaxed space-y-1">
+          <p>活动期间，江苏农行掌银用户每日 <span class="text-primary font-bold">00:00:00 至 20:59:59</span> 进入活动页面，点击【为我的城市加油】，为所在城市打CALL助力，系统将按报名顺序自动分配一个当日抽奖预约码。</p>
+          <p class="pt-1 border-t border-surface-container-high/30">• 每个城市每日抽取1名幸运用户，获得该城市专属的苏嘟嘟玩偶。</p>
+          <p>• 每个用户每天仅限参与一次，次日可重新预约参与。</p>
+        </div>
       </div>
-      <div class="bg-surface-container-lowest p-3 rounded-lg border border-outline-variant/20">
-        <div class="flex items-center gap-1.5 mb-1.5 text-primary">
-          <span class="material-symbols-outlined text-sm">verified_user</span>
-          <span class="font-semibold text-xs">实名要求</span>
+      
+      <!-- Phase 2 -->
+      <div class="bg-surface-container-lowest rounded-lg p-3">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="w-6 h-6 bg-secondary-fixed rounded-full flex items-center justify-center text-on-secondary-fixed text-xs font-bold">2</span>
+          <p class="font-bold text-sm text-secondary">阶段2：开奖与公示</p>
         </div>
-        <p class="text-[10px] text-on-surface-variant leading-relaxed">须完成农行实名认证，绑卡信息真实有效方可兑奖。</p>
+        <div class="text-[10px] text-on-surface-variant leading-relaxed space-y-1">
+          <p><span class="font-bold">开奖：</span>报名截止当日，以当日福彩3D和体彩排列三的开奖结果为依据，按本活动公示的抽奖算法计算中奖预约码。</p>
+          <p><span class="font-bold">公示：</span>次日上午12:00前，活动页面公布前一日的中奖预约码。已领取预约码的用户可点击【开奖公示】查看中奖结果。</p>
+          <p><span class="font-bold">领奖：</span>中奖用户将在开奖后1个工作日内接到活动服务商的电话通知。用户可前往【我的预约码】页面填写收货地址，用于领取苏嘟嘟城市毛绒玩偶。</p>
+        </div>
       </div>
-      <div class="col-span-2 bg-surface-container-lowest p-3 rounded-lg border border-outline-variant/20">
-        <div class="flex items-center gap-1.5 mb-1.5 text-primary">
-          <span class="material-symbols-outlined text-sm">gavel</span>
-          <span class="font-semibold text-xs">反作弊说明</span>
-        </div>
-        <p class="text-[10px] text-on-surface-variant leading-relaxed">如发现违规参与行为（包括但不限于虚拟账号、恶意刷奖等），主办方有权取消其活动资格及中奖名额。</p>
+    </div>
+  </section>
+
+  <!-- Activity Rules -->
+  <section class="bg-surface-container-low rounded-xl p-4">
+    <div class="flex items-center gap-2 mb-3">
+      <div class="w-1 h-5 bg-primary rounded-full"></div>
+      <h2 class="text-base font-bold text-primary">三、活动规则</h2>
+    </div>
+    
+    <div class="space-y-2 text-[10px] text-on-surface-variant leading-relaxed">
+      <p>1. 用户仅可在活动主页查看当天的预约码信息。次日0点页面自动刷新，用户可重新参与预约抽奖。</p>
+      <p>2. 用户可点击【我的预约码】查看历史预约码、参与记录及中奖记录；可点击【开奖公示】查看每日中奖预约码及详细抽奖算法。</p>
+      <p>3. 本活动奖品为实物礼品：2026年江苏省城市足球联赛"苏嘟嘟十三太保系列"毛绒玩偶。中奖用户须在开奖后<span class="text-primary font-bold">10个工作日内</span>填写完整收货信息，逾期视为自动放弃领奖资格，不再补发。</p>
+      <p>4. 同一客户每天最多参与一次活动。同一手机号、同一微信号、同一网银客户号、同一设备、同一身份证号均视为同一客户。</p>
+      <p>5. 严禁使用外挂、作弊等违规手段套取活动奖励。一经发现，活动方有权冻结违规订单并追回已发放的奖品。</p>
+      <p>6. 本活动由南京飞翰网络科技有限公司提供技术支持与运营服务。客服热线：400-111-8119（服务时间：8:00-22:00）。</p>
+      <p>7. 如有其他问题请咨询中国农业银行客服热线：95599。</p>
+    </div>
+  </section>
+
+  <!-- Prize Info -->
+  <section class="bg-secondary-fixed/20 rounded-xl p-4 border border-secondary-fixed/40">
+    <div class="flex items-center gap-2 mb-2">
+      <span class="material-symbols-outlined text-secondary text-lg" style="font-variation-settings:'FILL'1">info</span>
+      <h2 class="text-sm font-bold text-on-secondary-fixed">奖品说明</h2>
+    </div>
+    <div class="flex gap-3">
+      <div class="w-20 h-20 bg-surface rounded-lg overflow-hidden flex-shrink-0">
+        <img src="sududu.jpg" alt="苏嘟嘟" class="w-full h-full object-cover"/>
+      </div>
+      <div class="text-[10px] text-on-surface-variant leading-relaxed">
+        <p class="font-bold text-on-surface">苏嘟嘟十三太保系列</p>
+        <p class="mt-1">以长江江豚为原型的苏超官方吉祥物，每个城市还有专属形象：</p>
+        <p class="mt-0.5">南京鸭嘟嘟、苏州蟹嘟嘟、无锡甜嘟嘟、常州龙嘟嘟...</p>
+        <p class="mt-1 text-primary font-semibold">每日抽取13名幸运用户</p>
       </div>
     </div>
   </section>
@@ -870,8 +1099,9 @@
     </div>
     <div class="space-y-1.5">
       <div class="flex justify-between items-center text-xs">
-        <span class="text-on-surface-variant">南京飞瀚网络技术支持:</span>
+        <span class="text-on-surface-variant">技术支持:</span>
         <a class="text-primary font-bold" href="tel:4001118119">400-111-8119</a>
+        <span class="text-[9px] text-outline">(8:00-22:00)</span>
       </div>
       <div class="flex justify-between items-center text-xs">
         <span class="text-on-surface-variant">农行客服热线:</span>
@@ -879,11 +1109,6 @@
       </div>
     </div>
   </section>
-
-  <!-- Footer Image -->
-  <div class="mt-2">
-    <img class="w-full h-28 object-cover rounded-xl shadow-md" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80" alt="bank"/>
-  </div>
 </main>
 
 <footer class="bg-[#f2f4f3] w-full rounded-t-xl mt-4">
@@ -894,7 +1119,7 @@
       <span class="text-slate-500 font-inter text-[10px] hover:text-[#006950] transition-colors cursor-pointer">联系我们</span>
     </div>
     <p class="font-inter text-[10px] leading-relaxed text-center text-slate-500">
-      © 2024 Agricultural Bank of China. All Rights Reserved.
+      © 2026 Agricultural Bank of China. All Rights Reserved.
     </p>
   </div>
 </footer>
@@ -932,6 +1157,29 @@
     document.getElementById('claim-prize-name').textContent = prizeName;
     document.getElementById('claim-prize-img').src = prizeImg;
     showPage('claim');
+  }
+
+  function switchCodesTab(tab) {
+    const codesContent = document.getElementById('codes-content');
+    const winnersContent = document.getElementById('winners-content');
+    const tabCodes = document.getElementById('tab-codes');
+    const tabWinners = document.getElementById('tab-winners');
+    
+    if (tab === 'codes') {
+      codesContent.classList.remove('hidden');
+      winnersContent.classList.add('hidden');
+      tabCodes.classList.add('tab-active');
+      tabCodes.classList.remove('text-on-surface-variant');
+      tabWinners.classList.remove('tab-active');
+      tabWinners.classList.add('text-on-surface-variant');
+    } else {
+      codesContent.classList.add('hidden');
+      winnersContent.classList.remove('hidden');
+      tabWinners.classList.add('tab-active');
+      tabWinners.classList.remove('text-on-surface-variant');
+      tabCodes.classList.remove('tab-active');
+      tabCodes.classList.add('text-on-surface-variant');
+    }
   }
 
   function handleClaimSubmit(e) {
